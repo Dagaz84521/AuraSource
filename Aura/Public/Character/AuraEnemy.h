@@ -1,0 +1,53 @@
+//  Copyright Dagaz84521
+
+#pragma once
+
+#include "CoreMinimal.h"
+#include "Character/CharacterBase.h"
+#include "Interaction/EnemyInterface.h"
+#include "UI/WidgetController/OverlayWidgetController.h"
+#include "AbilitySystem/Data/CharacterClassInfo.h"
+#include "AuraEnemy.generated.h"
+
+class UWidgetComponent;
+
+
+
+/**
+ * 
+ */
+UCLASS()
+class AURA_API AAuraEnemy : public ACharacterBase, public IEnemyInterface
+{
+	GENERATED_BODY()
+public:
+	AAuraEnemy();
+
+	/** Enemy Interface */
+	virtual void HighlightActor() override;
+	virtual void UnHighlightActor() override;
+	/** end Enemy Interface */
+	
+	/** Combat Interface */
+	virtual int32 GetPlayerLevel() const override;
+	/** end Combat Interface */
+
+	UPROPERTY(BlueprintAssignable)
+	FOnAttributeChangedSignature OnHealthChange;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnAttributeChangedSignature OnMaxHealthChange;
+protected:
+	virtual void BeginPlay() override;
+	virtual void InitAbilityActorInfo() override;
+	virtual void InitializeDefaultAttributes() const override;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character Class Default")
+	int32 Level = 1;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character Class Default")
+	ECharacterClass CharacterClass = ECharacterClass::Warrior;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	TObjectPtr<UWidgetComponent> HealthBar;
+};
