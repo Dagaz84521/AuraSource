@@ -28,6 +28,7 @@ struct FCharacterClassDefaultInfo
 /**
  * 
  */
+// 这个类用于存储不同角色职业的默认信息，比如初始属性和技能
 UCLASS()
 class AURA_API UCharacterClassInfo : public UDataAsset
 {
@@ -41,6 +42,9 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Common Class Defaults")
 	TSubclassOf<UGameplayEffect> VitalAttributes;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Common Class Defaults")
+	TArray<TSubclassOf<UGameplayAbility>> CommonAbilities;
 
 	FCharacterClassDefaultInfo GetClassDefaultInfo(ECharacterClass CharacterClass);
 };
