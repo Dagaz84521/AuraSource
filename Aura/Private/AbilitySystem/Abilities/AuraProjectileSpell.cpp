@@ -51,7 +51,7 @@ void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocati
 		// 设置“按调用者传入”的伤害数值
 		FAuraGameplayTags GameplayTags = FAuraGameplayTags::Get();
 		// 计算按等级缩放的伤害数值
-		const float ScaledDamage = Damage.GetValueAtLevel(50);
+		const float ScaledDamage = Damage.GetValueAtLevel(10);
 		//const float ScaledDamage = Damage.GetValueAtLevel(GetAbilityLevel());
 		UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(SpecHandle, GameplayTags.Damage, ScaledDamage);
 		// 将伤害 Spec 交给投射物
