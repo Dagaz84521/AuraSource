@@ -31,15 +31,17 @@ void AAuraPlayerController::PlayerTick(float DeltaTime)
 	AutoRun();
 }
 
-void AAuraPlayerController::ShowDamageNumber_Implementation(float DamageAmount, ACharacter* TargetCharacter)
+void AAuraPlayerController::ShowDamageNumber_Implementation(float DamageAmount, ACharacter* TargetCharacter, bool bIsBlockedHit, bool bIsCriticalHit)
 {
-	if (IsValid(TargetCharacter) && IsValid(DamageTextComponentClass))
+	if (IsValid(TargetCharacter) && IsValid(DamageTextComponentClass) && IsLocalController())
 	{
 		UDamageTextComponent* DamageText =  NewObject<UDamageTextComponent>(TargetCharacter, DamageTextComponentClass);
 		DamageText->RegisterComponent();
+		// 先Attach，让位置对齐
 		DamageText->AttachToComponent(TargetCharacter->GetRootComponent(), FAttachmentTransformRules::KeepRelativeTransform);
+		// 再Detach，这样位置就不会被RootComponent影响，不会随着TargetCharacter移动而移动
 		DamageText->DetachFromComponent(FDetachmentTransformRules::KeepRelativeTransform);
-		DamageText->SetDamageText(DamageAmount);
+		DamageText->SetDamageText(DamageAmount, bIsBlockedHit, bIsCriticalHit);
 	}
 }
 

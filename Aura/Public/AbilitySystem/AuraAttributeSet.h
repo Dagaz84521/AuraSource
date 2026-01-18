@@ -126,6 +126,24 @@ public:
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_MaxHealth, Category = "Secondary Attributes")
 	FGameplayAttributeData MaxHealth;
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, MaxHealth);
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_FireResistance, Category = "Secondary Attributes")
+	FGameplayAttributeData FireResistance;
+	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, FireResistance);
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_LightningResistance, Category = "Secondary Attributes")
+	FGameplayAttributeData LightningResistance;
+	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, LightningResistance);
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_ArcaneResistance, Category = "Secondary Attributes")
+	FGameplayAttributeData ArcaneResistance;
+	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, ArcaneResistance);
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_PhysicalResistance, Category = "Secondary Attributes")
+	FGameplayAttributeData PhysicalResistance;
+	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, PhysicalResistance);
+
+	
 	
 	/*
 	 * Vital Attributes
@@ -154,40 +172,48 @@ public:
 	 */
 	// OnRep_Health 函数用于处理 Health 属性的变化
 	UFUNCTION()
-	void OnRep_Health(const FGameplayAttributeData& OldHealth);
+	void OnRep_Health(const FGameplayAttributeData& OldHealth) const;
 	UFUNCTION()
-	void OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHealth);
+	void OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHealth) const;
 	UFUNCTION()
-	void OnRep_Mana(const FGameplayAttributeData& OldMana);
+	void OnRep_Mana(const FGameplayAttributeData& OldMana) const;
 	UFUNCTION()
-	void OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana);
+	void OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana) const;
 	UFUNCTION()
-	void OnRep_Strength(const FGameplayAttributeData& OldStrength);
+	void OnRep_Strength(const FGameplayAttributeData& OldStrength) const;
 	UFUNCTION()
-	void OnRep_Intelligence(const FGameplayAttributeData& OldIntelligence);
+	void OnRep_Intelligence(const FGameplayAttributeData& OldIntelligence) const;
 	UFUNCTION()
-	void OnRep_Resilience(const FGameplayAttributeData& OldResilience);
+	void OnRep_Resilience(const FGameplayAttributeData& OldResilience) const;
 	UFUNCTION()
-	void OnRep_Vigor(const FGameplayAttributeData& OldVigor);
+	void OnRep_Vigor(const FGameplayAttributeData& OldVigor) const;
 	UFUNCTION()
-	void OnRep_Armor(const FGameplayAttributeData& OldArmor);
+	void OnRep_Armor(const FGameplayAttributeData& OldArmor) const;
 	UFUNCTION()
-	void OnRep_ArmorPenetration(const FGameplayAttributeData& OldArmorPenetration);
+	void OnRep_ArmorPenetration(const FGameplayAttributeData& OldArmorPenetration) const;
 	UFUNCTION()
-	void OnRep_BlockChance(const FGameplayAttributeData& OldBlockChance);
+	void OnRep_BlockChance(const FGameplayAttributeData& OldBlockChance) const;
 	UFUNCTION()
-	void OnRep_CritcalHitChance(const FGameplayAttributeData& OldCriticalHitChance);
+	void OnRep_CritcalHitChance(const FGameplayAttributeData& OldCriticalHitChance) const;
 	UFUNCTION()
-	void OnRep_CriticalHitDamage(const FGameplayAttributeData& OldCriticalHitDamage);
+	void OnRep_CriticalHitDamage(const FGameplayAttributeData& OldCriticalHitDamage) const;
 	UFUNCTION()
-	void OnRep_CriticalHitResistance(const FGameplayAttributeData& OldCriticalHitResistance);
+	void OnRep_CriticalHitResistance(const FGameplayAttributeData& OldCriticalHitResistance) const;
 	UFUNCTION()
-	void OnRep_HealthRegen(const FGameplayAttributeData& OldHealthRegen);
+	void OnRep_HealthRegen(const FGameplayAttributeData& OldHealthRegen) const;
 	UFUNCTION()
-	void OnRep_ManaRegen(const FGameplayAttributeData& OldManaRegen);
+	void OnRep_ManaRegen(const FGameplayAttributeData& OldManaRegen) const;
+	UFUNCTION()
+	void OnRep_FireResistance(const FGameplayAttributeData& OldFireResistance) const;
+	UFUNCTION()
+	void OnRep_LightningResistance(const FGameplayAttributeData& OldLightningResistance) const;
+	UFUNCTION()
+	void OnRep_ArcaneResistance(const FGameplayAttributeData& OldArcaneResistance) const;
+	UFUNCTION()
+	void OnRep_PhysicalResistance(const FGameplayAttributeData& OldPhysicalResistance) const;
 
 private:
 	void SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props);
-	void ShowFloatingText(const FEffectProperties& Props, float Damage);
+	void ShowFloatingText(const FEffectProperties& Props, float Damage,  bool bBlockedHit, bool bCriticalHit);
 };
 

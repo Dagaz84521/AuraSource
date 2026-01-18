@@ -30,7 +30,6 @@ void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocati
 		// 计算投射物起点与朝向
 		const FVector SocketLocation = CombatInterface->GetCombatSocketLocation();
 		FRotator Rotation = (ProjectileTargetLocation - SocketLocation).Rotation();
-		Rotation.Pitch = 0.0f;
 		// 构造生成变换
 		FTransform SpawnTransform;
 		SpawnTransform.SetLocation(SocketLocation);
@@ -47,13 +46,20 @@ void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocati
 		
 		// 创建伤害 GameplayEffectSpec
 		const UAbilitySystemComponent* SourceASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetAvatarActorFromActorInfo());
-		const FGameplayEffectSpecHandle SpecHandle = SourceASC->MakeOutgoingSpec(DamageEffectClass, GetAbilityLevel(), SourceASC->MakeEffectContext());
+		FGameplayEffectContextHandle EffectContextHandle = SourceASC->MakeEffectContext();
+		EffectContextHandle.SetAbility(this);
+		EffectContextHandle.AddSourceObject(Projectile);
+		const FGameplayEffectSpecHandle SpecHandle = SourceASC->MakeOutgoingSpec(DamageEffectClass, GetAbilityLevel(), EffectContextHandle);
+
 		// 设置“按调用者传入”的伤害数值
 		FAuraGameplayTags GameplayTags = FAuraGameplayTags::Get();
-		// 计算按等级缩放的伤害数值
-		const float ScaledDamage = Damage.GetValueAtLevel(10);
-		//const float ScaledDamage = Damage.GetValueAtLevel(GetAbilityLevel());
-		UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(SpecHandle, GameplayTags.Damage, ScaledDamage);
+		for (auto& Pair : DamageTypes)
+		{
+			//const float ScaledDamage = Damage.GetValueAtLevel(GetAbilityLevel());
+			const float ScaledDamage = Pair.Value.GetValueAtLevel(GetAbilityLevel());
+			UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(SpecHandle, Pair.Key, ScaledDamage);
+		}
+		
 		// 将伤害 Spec 交给投射物
 		Projectile->DamageEffectSpecHandle = SpecHandle;
 		
