@@ -79,6 +79,7 @@ bool FAuraGameplayEffectContext::NetSerialize(FArchive& Ar, class UPackageMap* M
 		Ar << WorldOrigin;
 		bHasWorldOrigin = true;
 	}
+	else
 	{
 		bHasWorldOrigin = false;
 	}
