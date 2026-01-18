@@ -2,7 +2,7 @@
 #include "AuraAbilityTypes.generated.h"
 
 USTRUCT()
-struct FAuraGameplayEffectContext : public FGameplayEffectContext
+struct AURA_API FAuraGameplayEffectContext : public FGameplayEffectContext
 {
 	GENERATED_BODY()
 public:
@@ -14,7 +14,7 @@ public:
 	
 	virtual UScriptStruct* GetScriptStruct() const
 	{
-		return FGameplayEffectContext::StaticStruct();
+		return FAuraGameplayEffectContext::StaticStruct();
 	}
 	
 	/** Creates a copy of this context, used to duplicate for later modifications */
